@@ -1,0 +1,706 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://www.openarcloud.org/geopose.request.schema.json",
+  "type": "object",
+  "title": "GeoPose request schema",
+  "description": "Schema for the GeoPose request protocol, used to localize a device in the real world",
+  "default": {},
+  "required": [
+    "id",
+    "timestamp",
+    "type",
+    "sensors",
+    "sensorReadings"
+  ],
+  "properties": {
+    "id": {
+      "$id": "#/properties/id",
+      "type": "string",
+      "default": "",
+      "examples": [
+        "requestid"
+      ]
+    },
+    "timestamp": {
+      "$id": "#/properties/timestamp",
+      "type": "string",
+      "default": "",
+      "format": "date-time",
+      "examples": [
+        "2020/12/31"
+      ]
+    },
+    "type": {
+      "$id": "#/properties/type",
+      "type": "string",
+      "default": "geopose",
+      "examples": [
+        "geopose"
+      ]
+    },
+    "sensors": {
+      "$id": "#/properties/sensors",
+      "type": "array",
+      "default": [],
+      "items": [{
+            "$id": "#/properties/sensors/items/0",
+            "type": "object",
+            "default": {},
+            "required": [
+              "id",
+              "type"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/id",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "sensorid"
+                ]
+              },
+              "name": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/name",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "sensorname"
+                ]
+              },
+              "model": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/model",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "sensormodel"
+                ]
+              },
+              "rigIdentifier": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/rigIdentifier",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "sensorrig"
+                ]
+              },
+              "rigRotation": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/rigRotation",
+                "type": "array",
+                "minItems": 4,
+                "maxItems": 4,
+                "additionalItems": false,
+                "items": {
+                    "$id": "#/properties/sensors/items/anyOf/0/properties/rigRotation/items/anyOf/0",
+                    "type": "number"
+                  }
+              },
+              "rigTranslation": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/rigTranslation",
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "additionalItems": false,
+                "items": {
+                  "$id": "#/properties/sensors/items/anyOf/0/properties/rigTranslation/items",
+                  "type": "number"
+                }
+              },
+              "type": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/type",
+                "type": "string",
+                "enum": [
+                  "camera",
+                  "geolocation",
+                  "wifi",
+                  "bluetooth",
+                  "accelerometer",
+                  "gyroscope",
+                  "magnetometer"
+                ],
+                "default": "",
+                "examples": [
+                  "camera"
+                ]
+              },
+              "params": {
+                "$id": "#/properties/sensors/items/anyOf/0/properties/params",
+                "type": "object",
+                "default": {},
+                "required": [
+                ],
+                "properties": {
+                  "model": {
+                    "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/model",
+                    "type": "string",
+                    "enum": [
+                      "UNKNOWN_CAMERA",
+                      "SIMPLE_PINHOLE",
+                      "SIMPLE_RADIAL",
+                      "RADIAL",
+                      "PINHOLE",
+                      "OPENCV",
+                      "FULL_OPENCV"
+                    ],
+                    "default": "",
+                    "examples": [
+                      "PINHOLE"
+                    ]
+                  },
+                  "modelParams": {
+                    "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/modelParams",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                      "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/modelParams/items",
+                      "type": "number"
+                    }
+                  },
+                  "minMaxDepth": {
+                    "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/minMaxDepth",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                      "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/minMaxDepth/items",
+                      "type": "number"
+                    }
+                  },
+                  "minMaxDisparity": {
+                    "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/minMaxDisparity",
+                    "type": "array",
+                    "title": "The minMaxDisparity schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                      "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/minMaxDisparity/items",
+                      "type": "number"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+    },
+    "sensorReadings": {
+      "$id": "#/properties/sensorReadings",
+      "type": "array",
+      "default": [],
+      "additionalItems": false,
+      "items": {
+            "$id": "#/properties/sensorReadings/items/anyOf/0",
+            "type": "object",
+            "default": {},
+            "required": [
+              "timestamp",
+              "sensorId",
+              "privacy"
+            ],
+            "properties": {
+              "timestamp": {
+                "$id": "#/properties/sensorReadings/items/anyOf/0/properties/timestamp",
+                "type": "string",
+                "format": "date-time",
+                "default": "",
+                "examples": [
+                  "2020/12/31"
+                ]
+              },
+              "sensorId": {
+                "$id": "#/properties/sensorReadings/items/anyOf/0/properties/sensorId",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "sensorid"
+                ]
+              },
+              "privacy": {
+                "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy",
+                "type": "object",
+                "default": {},
+                "required": [
+                  "dataRetention",
+                  "dataAcceptableUse",
+                  "dataSanitizationApplied",
+                  "dataSanitizationRequested"
+                ],
+                "properties": {
+                  "dataRetention": {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataRetention",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                          "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataRetention/items/anyOf/0",
+                          "type": "string",
+                          "default": "",
+                          "examples": [
+                            "retention"
+                          ]
+                        }
+                  },
+                  "dataAcceptableUse": {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataAcceptableUse",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                          "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataAcceptableUse/items/anyOf/0",
+                          "type": "string",
+                          "default": "",
+                          "examples": [
+                            "use"
+                          ]
+                        }
+                  },
+                  "dataSanitizationApplied": {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataSanitizationApplied",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                          "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataSanitizationApplied/items/anyOf/0",
+                          "type": "string",
+                          "default": "",
+                          "examples": [
+                            "applied"
+                          ]
+                        }
+                  },
+                  "dataSanitizationRequested": {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataSanitizationRequested",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                          "$id": "#/properties/sensorReadings/items/anyOf/0/properties/privacy/properties/dataSanitizationRequested/items/anyOf/0",
+                          "type": "string",
+                          "default": "",
+                          "examples": [
+                            "requested"
+                          ]
+                        }
+                  }
+                },
+                "additionalProperties": false
+              },
+              "reading": {
+                "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading",
+                "type": "object",
+                "default": {},
+                "additionalItems": false,
+                "oneOf": [
+                  {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0",
+                    "type": "object",
+                    "default": {},
+                    "required": [
+                      "sequenceNumber",
+                      "imageFormat",
+                      "size",
+                      "imageBytes"
+                    ],
+                    "properties": {
+                      "sequenceNumber": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/sequenceNumber",
+                        "type": "integer",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "imageFormat": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/imageFormat",
+                        "type": "string",
+                        "default": "",
+                        "examples": [
+                          "RGBA32"
+                        ]
+                      },
+                      "size": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/size",
+                        "type": "array",
+                        "minItems": 2,
+                        "maxItems": 2,
+                        "default": [],
+                        "additionalItems": false,
+                        "items": {
+                              "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/size/items/anyOf/0",
+                              "type": "number",
+                              "default": 0,
+                              "examples": [
+                                100,
+                                200
+                              ]
+                            }
+                      },
+                      "imageBytes": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/imageBytes",
+                        "type": "string",
+                        "default": "",
+                        "examples": [
+                          "base64"
+                        ]
+                      },
+                      "imageOrientation": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/imageOrientation",
+                        "type": "object",
+                        "default": {},
+                        "required": [
+                          "mirrored",
+                          "rotation"
+                        ],
+                        "properties": {
+                          "mirrored": {
+                            "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/imageOrientation/properties/mirrored",
+                            "type": "boolean",
+                            "default": false,
+                            "examples": [
+                              false
+                            ]
+                          },
+                          "rotation": {
+                            "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0/properties/imageOrientation/properties/rotation",
+                            "type": "number",
+                            "default": 0,
+                            "examples": [
+                              45
+                            ]
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1",
+                    "type": "object",
+                    "default": {},
+                    "required": [
+                      "latitude",
+                      "longitude",
+                      "altitude",
+                      "accuracy",
+                      "altitudeAccuracy",
+                      "heading",
+                      "speed"
+                    ],
+                    "properties": {
+                      "latitude": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/latitude",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1.0
+                        ]
+                      },
+                      "longitude": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/longitude",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1.0
+                        ]
+                      },
+                      "altitude": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/altitude",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          100
+                        ]
+                      },
+                      "accuracy": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/accuracy",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "altitudeAccuracy": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/altitudeAccuracy",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "heading": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/heading",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1.0
+                        ]
+                      },
+                      "speed": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/1/properties/speed",
+                        "type": "integer",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2",
+                    "type": "object",
+                    "default": {},
+                    "required": [
+                      "BSSID",
+                      "frequency",
+                      "RSSI",
+                      "SSID",
+                      "scanTimeStart",
+                      "scanTimeEnd"
+                    ],
+                    "properties": {
+                      "BSSID": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2/properties/BSSID",
+                        "type": "string",
+                        "default": "",
+                        "examples": [
+                          "id"
+                        ]
+                      },
+                      "frequency": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2/properties/frequency",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "RSSI": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2/properties/RSSI",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "SSID": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2/properties/SSID",
+                        "type": "string",
+                        "default": "",
+                        "examples": [
+                          "ssid"
+                        ]
+                      },
+                      "scanTimeStart": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2/properties/scanTimeStart",
+                        "type": "string",
+                        "format": "date",
+                        "default": "",
+                        "examples": [
+                          "2020/12/01"
+                        ]
+                      },
+                      "scanTimeEnd": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/2/properties/scanTimeEnd",
+                        "type": "string",
+                        "format": "date",
+                        "default": "",
+                        "examples": [
+                          "2020/12/01"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/3",
+                    "type": "object",
+                    "default": {},
+                    "required": [
+                      "address",
+                      "RSSI",
+                      "name"
+                    ],
+                    "properties": {
+                      "address": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/3/properties/address",
+                        "type": "string",
+                        "default": "",
+                        "examples": [
+                          "address"
+                        ]
+                      },
+                      "RSSI": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/3/properties/RSSI",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "name": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/3/properties/name",
+                        "type": "string",
+                        "default": "",
+                        "examples": [
+                          "name"
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/4",
+                    "type": "object",
+                    "default": {},
+                    "required": [
+                      "x",
+                      "y",
+                      "z"
+                    ],
+                    "properties": {
+                      "x": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/4/properties/x",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "y": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/4/properties/y",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      },
+                      "z": {
+                        "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/4/properties/z",
+                        "type": "number",
+                        "default": 0,
+                        "examples": [
+                          1
+                        ]
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                ]}
+            },
+            "additionalProperties": false
+          }
+    },
+    "priorPoses": {
+      "$id": "#/properties/priorPose",
+      "type": "array",
+      "default": [],
+      "additionalItems": false,
+      "items": {
+            "$id": "#/properties/priorPose/items/anyOf/0",
+            "type": "object",
+            "title": "The first anyOf schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "required": [
+              "id",
+              "timestamp",
+              "accuracy",
+              "type",
+              "pose"
+            ],
+            "properties": {
+              "id": {
+                "$id": "#/properties/priorPose/items/anyOf/0/properties/id",
+                "type": "string",
+                "default": "",
+                "examples": [
+                  "geoposeid"
+                ]
+              },
+              "timestamp": {
+                "$id": "#/properties/priorPose/items/anyOf/0/properties/timestamp",
+                "type": "string",
+                "format": "date-time",
+                "default": "",
+                "examples": [
+                  "2020/12/01"
+                ]
+              },
+              "accuracy": {
+                "$id": "#/properties/priorPose/items/anyOf/0/properties/accuracy",
+                "type": "number",
+                "default": 0,
+                "examples": [
+                  1
+                ]
+              },
+              "type": {
+                "$id": "#/properties/priorPose/items/anyOf/0/properties/type",
+                "type": "string",
+                "default": "geopose",
+                "examples": [
+                  "geopose"
+                ]
+              },
+              "pose": {
+                "$id": "#/properties/priorPose/items/anyOf/0/properties/pose",
+                "type": "object",
+                "default": {},
+                "required": [
+                  "longitude",
+                  "latitude",
+                  "ellipsoidHeight",
+                  "quaternion"
+                ],
+                "properties": {
+                  "longitude": {
+                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/longitude",
+                    "type": "number",
+                    "default": 0,
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "latitude": {
+                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/latitude",
+                    "type": "number",
+                    "default": 0,
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "ellipsoidHeight": {
+                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/ellipsoidHeight",
+                    "type": "number",
+                    "default": 0,
+                    "examples": [
+                      1
+                    ]
+                  },
+                  "quaternion": {
+                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/quaternion",
+                    "type": "array",
+                    "default": [],
+                    "additionalItems": false,
+                    "items": {
+                          "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/quaternion/items/anyOf/0",
+                          "type": "number",
+                          "minItems": 4,
+                          "maxItems": 4
+                        }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+    }
+  },
+  "additionalProperties": false
+}

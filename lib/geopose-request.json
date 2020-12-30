@@ -1,0 +1,59 @@
+{
+  "id": "d9fbf438-b7c6-419a-a75b-1cf79275e58d",
+  "timestamp": "2020-12-26T15:19:50.413Z",
+  "type": "geopose",
+  "sensors": [
+    {
+      "id": "0",
+      "type": "camera"
+    },
+    {
+      "id": "1",
+      "type": "geolocation"
+    }
+  ],
+  "sensorReadings": [
+    {
+      "sensorId": "0",
+      "timestamp": "2020-12-26T15:19:50.381Z",
+      "privacy": {
+        "dataRetention": [],
+        "dataAcceptableUse": [],
+        "dataSanitizationApplied": [],
+        "dataSanitizationRequested": []
+      },
+      "reading": {
+        "sequenceNumber": 0,
+        "imageFormat": "JPG",
+        "size": [
+          1920,
+          1080
+        ],
+        "imageBytes": "",
+        "imageOrientation": {
+          "mirrored": false,
+          "rotation": 0
+        }
+      }
+    },
+    {
+      "sensorId": "1",
+      "timestamp": "2020-12-26T15:19:50.381Z",
+      "privacy": {
+        "dataRetention": [],
+        "dataAcceptableUse": [],
+        "dataSanitizationApplied": [],
+        "dataSanitizationRequested": []
+      },
+      "reading": {
+        "latitude": 47.61155,
+        "longitude": -122.33705555555555,
+        "altitude": 0,
+        "accuracy": 0,
+        "altitudeAccuracy": 0,
+        "heading": 0,
+        "speed": 0
+      }
+    }
+  ]
+}
