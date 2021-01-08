@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://www.openarcloud.org/geopose.request.schema.json",
+  "$id": "http://www.openarcloud.org/geopose-request.schema.json",
   "type": "object",
   "title": "GeoPose request schema",
   "description": "Schema for the GeoPose request protocol, used to localize a device in the real world",
@@ -23,12 +23,7 @@
     },
     "timestamp": {
       "$id": "#/properties/timestamp",
-      "type": "string",
-      "default": "",
-      "format": "date-time",
-      "examples": [
-        "2020/12/31"
-      ]
+      "type": "integer"
     },
     "type": {
       "$id": "#/properties/type",
@@ -85,24 +80,48 @@
               },
               "rigRotation": {
                 "$id": "#/properties/sensors/items/anyOf/0/properties/rigRotation",
-                "type": "array",
-                "minItems": 4,
-                "maxItems": 4,
+                "type": "object",
                 "additionalItems": false,
-                "items": {
-                    "$id": "#/properties/sensors/items/anyOf/0/properties/rigRotation/items/anyOf/0",
-                    "type": "number"
+                "required": [
+                  "x",
+                  "y",
+                  "z",
+                  "w"
+                ],
+                "properties": {
+                    "x": {
+                      "type": "number"
+                    },
+                    "y": {
+                      "type": "number"
+                    },
+                    "z": {
+                      "type": "number"
+                    },
+                    "w": {
+                      "type": "number"
+                    }
                   }
               },
               "rigTranslation": {
                 "$id": "#/properties/sensors/items/anyOf/0/properties/rigTranslation",
-                "type": "array",
-                "minItems": 3,
-                "maxItems": 3,
+                "type": "object",
                 "additionalItems": false,
-                "items": {
-                  "$id": "#/properties/sensors/items/anyOf/0/properties/rigTranslation/items",
-                  "type": "number"
+                "required": [
+                  "x",
+                  "y",
+                  "z"
+                ],
+                "properties": {
+                  "x": {
+                    "type": "number"
+                  },
+                  "y": {
+                    "type": "number"
+                  },
+                  "z": {
+                    "type": "number"
+                  }
                 }
               },
               "type": {
@@ -203,12 +222,7 @@
             "properties": {
               "timestamp": {
                 "$id": "#/properties/sensorReadings/items/anyOf/0/properties/timestamp",
-                "type": "string",
-                "format": "date-time",
-                "default": "",
-                "examples": [
-                  "2020/12/31"
-                ]
+                "type": "integer"
               },
               "sensorId": {
                 "$id": "#/properties/sensorReadings/items/anyOf/0/properties/sensorId",
@@ -293,7 +307,7 @@
                 "type": "object",
                 "default": {},
                 "additionalItems": false,
-                "oneOf": [
+                "anyOf": [
                   {
                     "$id": "#/properties/sensorReadings/items/anyOf/0/properties/reading/items/anyOf/0",
                     "type": "object",
@@ -624,12 +638,7 @@
               },
               "timestamp": {
                 "$id": "#/properties/priorPose/items/anyOf/0/properties/timestamp",
-                "type": "string",
-                "format": "date-time",
-                "default": "",
-                "examples": [
-                  "2020/12/01"
-                ]
+                "type": "integer"
               },
               "accuracy": {
                 "$id": "#/properties/priorPose/items/anyOf/0/properties/accuracy",
