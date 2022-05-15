@@ -1,6 +1,6 @@
 {
   "name": "@oarc/gpp-access",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Helpful utilities around OSCP GeoPose protocol",
   "main": "index.js",
   "type": "module",
@@ -27,6 +27,7 @@
   "homepage": "https://github.com/OpenArCloud/gpp-access#readme",
   "dependencies": {
     "ajv": "^8.11.0",
+    "ajv-formats": "^2.1.1",
     "deepmerge": "^4.2.2"
   },
   "devDependencies": {
