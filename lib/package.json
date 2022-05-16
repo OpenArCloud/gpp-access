@@ -1,6 +1,6 @@
 {
   "name": "@oarc/gpp-access",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Helpful utilities around OSCP GeoPose protocol",
   "main": "index.js",
   "type": "module",
