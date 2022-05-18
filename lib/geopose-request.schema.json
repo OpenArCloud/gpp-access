@@ -661,47 +661,51 @@
                 "type": "object",
                 "default": {},
                 "required": [
-                  "longitude",
-                  "latitude",
-                  "ellipsoidHeight",
+                  "position",
                   "quaternion"
                 ],
                 "properties": {
-                  "longitude": {
-                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/longitude",
-                    "type": "number",
-                    "default": 0,
-                    "examples": [
-                      1
-                    ]
-                  },
-                  "latitude": {
-                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/latitude",
-                    "type": "number",
-                    "default": 0,
-                    "examples": [
-                      1
-                    ]
-                  },
-                  "ellipsoidHeight": {
-                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/ellipsoidHeight",
-                    "type": "number",
-                    "default": 0,
-                    "examples": [
-                      1
-                    ]
+                  "position" : {
+                    "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/position",
+                    "type": "object",
+                    "properties": {
+                      "lon": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "lat": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "h": {
+                        "type": "number",
+                        "default": 0
+                      }
+                    },
+                    "required": ["lon", "lat", "h"]
                   },
                   "quaternion": {
                     "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/quaternion",
-                    "type": "array",
-                    "default": [],
-                    "additionalItems": false,
-                    "items": {
-                          "$id": "#/properties/priorPose/items/anyOf/0/properties/pose/properties/quaternion/items/anyOf/0",
-                          "type": "number",
-                          "minItems": 4,
-                          "maxItems": 4
-                        }
+                    "type": "object",
+                    "properties": {
+                      "x": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "y": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "z": {
+                        "type": "number",
+                        "default": 0
+                      },
+                      "w": {
+                        "type": "number",
+                        "default": 1
+                      }
+                    },
+                    "required": ["x", "y", "z", "w"]
                   }
                 },
                 "additionalProperties": false
