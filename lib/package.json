@@ -1,7 +1,7 @@
 {
   "name": "@oarc/gpp-access",
-  "version": "0.0.6",
-  "description": "Helpful utilities around OSCP GeoPose protocol",
+  "version": "0.0.9",
+  "description": "Utilities around the Open AR Cloud GeoPoseProtocol",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -12,14 +12,16 @@
     "url": "git+https://github.com/OpenArCloud/gpp-access.git"
   },
   "keywords": [
+    "camera",
+    "localization",
+    "relocalisation",
     "geopose",
     "arcloud",
     "spatial",
     "capture",
-    "relocalisation",
     "oarc"
   ],
-  "author": "Michael Vogt",
+  "author": "Michael Vogt and Gabor Soros",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/OpenArCloud/gpp-access/issues"

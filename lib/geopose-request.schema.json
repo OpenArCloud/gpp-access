@@ -152,15 +152,20 @@
                     "$id": "#/properties/sensors/items/anyOf/0/properties/params/properties/model",
                     "type": "string",
                     "enum": [
-                      "UNKNOWN_CAMERA",
                       "SIMPLE_PINHOLE",
+                      "PINHOLE",
                       "SIMPLE_RADIAL",
                       "RADIAL",
-                      "PINHOLE",
                       "OPENCV",
-                      "FULL_OPENCV"
+                      "OPENCV_FISHEYE",
+                      "FULL_OPENCV",
+                      "FOV",
+                      "SIMPLE_RADIAL_FISHEYE",
+                      "RADIAL_FISHEYE",
+                      "THIN_PRISM",
+                      "UNKNOWN"
                     ],
-                    "default": "",
+                    "default": "UNKNOWN",
                     "examples": [
                       "PINHOLE"
                     ]
