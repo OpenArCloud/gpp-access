@@ -5,10 +5,9 @@
 
 import chai from 'chai';
 
-import CameraReading from "../../../request/readings/CameraReading.js";
-import ImageOrientation from "../../../request/options/ImageOrientation.js";
-import { IMAGEFORMAT } from '../../../GppGlobals.js'
-
+import CameraReading from '../../../request/readings/CameraReading';
+import ImageOrientation from '../../../request/options/ImageOrientation';
+import { IMAGEFORMAT } from '../../../GppGlobals';
 
 const expect = chai.expect;
 
@@ -19,11 +18,10 @@ const imageBytes = 'imageb64';
 const orientationMirrored = false;
 const orientationRotation = 6;
 
-const defaultJson = `"sequenceNumber":${sequenceNumber},"imageFormat":"${imageFormat}","size":[${imageSize}],"imageBytes":"${imageBytes}"`
-const orientationJson = `"imageOrientation":{"mirrored":${orientationMirrored},"rotation":${orientationRotation}`
+const defaultJson = `"sequenceNumber":${sequenceNumber},"imageFormat":"${imageFormat}","size":[${imageSize}],"imageBytes":"${imageBytes}"`;
+const orientationJson = `"imageOrientation":{"mirrored":${orientationMirrored},"rotation":${orientationRotation}`;
 
 let reading;
-
 
 describe('CameraReading', () => {
     describe('constructor', () => {
@@ -36,11 +34,11 @@ describe('CameraReading', () => {
     describe('Accessors', () => {
         beforeEach(() => {
             reading = new CameraReading(imageFormat, imageSize, imageBytes, sequenceNumber);
-        })
+        });
 
         it('ImageOrientation', () => {
             reading.imageOrientation = new ImageOrientation(orientationMirrored, orientationRotation);
-            expect(JSON.stringify(reading)).to.be.equal(`{${defaultJson},${orientationJson}}}`)
-        })
-    })
+            expect(JSON.stringify(reading)).to.be.equal(`{${defaultJson},${orientationJson}}}`);
+        });
+    });
 });

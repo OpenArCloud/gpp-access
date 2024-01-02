@@ -5,8 +5,7 @@
 
 import chai from 'chai';
 
-import AccelerometerReading from "../../../request/readings/AccelerometerReading.js";
-
+import AccelerometerReading from '../../../request/readings/AccelerometerReading';
 
 const expect = chai.expect;
 
@@ -17,7 +16,6 @@ const z = 3;
 const defaultJson = `"x":${x},"y":${y},"z":${z}`;
 
 let reading;
-
 
 describe('AcceleratingReading', () => {
     describe('constructor', () => {

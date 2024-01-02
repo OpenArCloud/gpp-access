@@ -3,25 +3,36 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import { SENSORTYPE } from '../GppGlobals.js';
-
+import { Quaternion } from '..';
+import { SENSORTYPE } from '../GppGlobals';
+import { CameraParam } from './options/CameraParam';
 
 /**
  * Defines a sensor used for the GeoPoseRequest
  */
 export default class Sensor {
+    private sensor: {
+        id: string;
+        type: string;
+        name?: string;
+        model?: string;
+        rigIdentifier?: string;
+        rigRotation?: Quaternion;
+        rigTranslation?: number[];
+        params?: CameraParam;
+    };
     /**
      * Constructor, setting the required properties
      *
      * @param id  String  Id, used to bind to the readings
      * @param type  String  One of the supported types, defined in GppGlobals.SENSORTYPE
      */
-    constructor(id, type) {
+    constructor(id: string, type: string) {
         this._verifySensorType(type);
 
         this.sensor = {
             id: id,
-            type: type
+            type: type,
         };
     }
 
@@ -38,7 +49,7 @@ export default class Sensor {
     }
 
     set type(type) {
-        this._verifySensorType(type)
+        this._verifySensorType(type);
         this.sensor.type = type;
     }
 
@@ -71,11 +82,9 @@ export default class Sensor {
     }
 
     set rigRotation(quaternion) {
-        if (!(quaternion instanceof Object))
-            throw new Error('Parameter of type Object with x, y, z, w properties required');
+        if (!(quaternion instanceof Object)) throw new Error('Parameter of type Object with x, y, z, w properties required');
 
-        if (typeof(quaternion.x) !== 'number' || typeof (quaternion.y) !== 'number'
-            || typeof(quaternion.z) !== 'number' || typeof (quaternion.w) !== 'number')
+        if (typeof quaternion.x !== 'number' || typeof quaternion.y !== 'number' || typeof quaternion.z !== 'number' || typeof quaternion.w !== 'number')
             throw new Error('Parameters of type Number required');
 
         this.sensor.rigRotation = quaternion;
@@ -86,11 +95,9 @@ export default class Sensor {
     }
 
     set rigTranslation(translation) {
-        if (!(translation instanceof Array) || translation.length !== 3)
-            throw new Error('Parameter of type Array with length 3 required');
+        if (!(translation instanceof Array) || translation.length !== 3) throw new Error('Parameter of type Array with length 3 required');
 
-        if (typeof(translation[0]) !== 'number' || typeof(translation[1]) !== 'number' || typeof(translation[2]) !== 'number')
-            throw new Error('Array of type Number required');
+        if (typeof translation[0] !== 'number' || typeof translation[1] !== 'number' || typeof translation[2] !== 'number') throw new Error('Array of type Number required');
 
         this.sensor.rigTranslation = translation;
     }
@@ -109,9 +116,8 @@ export default class Sensor {
      * @param type  String  The type to check
      * @private
      */
-    _verifySensorType(type) {
-        if (!(SENSORTYPE.hasOwnProperty(type)))
-            throw new Error('Invalid sensor type');
+    _verifySensorType(type: string) {
+        if (!SENSORTYPE.hasOwnProperty(type)) throw new Error('Invalid sensor type');
     }
 
     /**
@@ -120,11 +126,11 @@ export default class Sensor {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
+    toJSON(key: any) {
         const isNumericKey = !isNaN(key) && !isNaN(parseFloat(key));
 
         if (!isNumericKey && key) {
-            return this.sensor[key];
+            return this.sensor[key as keyof typeof this.sensor];
         } else {
             return this.sensor;
         }

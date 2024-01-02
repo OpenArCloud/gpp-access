@@ -7,6 +7,15 @@
  * Structure for a Wifi sensor reading
  */
 export default class WifiReading {
+    private reading: {
+        BSSID: string;
+        frequency: number;
+        RSSI: number;
+        SSID: string;
+        scanTimeStart: string;
+        scanTimeEnd: string;
+        scanTimeStop?: string;
+    };
     /**
      * Constructor, setting the required properties
      *
@@ -17,15 +26,15 @@ export default class WifiReading {
      * @param scanTimeStart  String
      * @param scanTimeEnd  String
      */
-    constructor(bssid, frequency, rssi, ssid, scanTimeStart, scanTimeEnd) {
+    constructor(bssid: string, frequency: number, rssi: number, ssid: string, scanTimeStart: string, scanTimeEnd: string) {
         this.reading = {
             BSSID: bssid,
             frequency: frequency,
             RSSI: rssi,
             SSID: ssid,
             scanTimeStart: scanTimeStart,
-            scanTimeEnd: scanTimeEnd
-        }
+            scanTimeEnd: scanTimeEnd,
+        };
     }
 
     get bssid() {
@@ -76,17 +85,14 @@ export default class WifiReading {
         this.reading.scanTimeStop = stop;
     }
 
-
     /**
      * Providing the correct data to JSON.stringify()
      *
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
-        if (key !== '' && key !== 'reading')
-            return this.reading[key];
-        else
-            return this.reading;
+    toJSON(key: keyof typeof this.reading | '' | 'reading') {
+        if (key !== '' && key !== 'reading') return this.reading[key];
+        else return this.reading;
     }
-};
+}

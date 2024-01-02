@@ -5,16 +5,14 @@
 
 import chai from 'chai';
 
-import SensorReading from "../../request/SensorReading.js";
-import CameraReading from "../../request/readings/CameraReading.js";
-
+import SensorReading from '../../request/SensorReading';
+import CameraReading from '../../request/readings/CameraReading';
 
 const expect = chai.expect;
 
 const sensorId = 'sensorid';
 
 let readingObject;
-
 
 describe('SensorReadingTest', () => {
     describe('constructor', () => {
@@ -28,18 +26,18 @@ describe('SensorReadingTest', () => {
     describe('Accessors', () => {
         beforeEach(() => {
             readingObject = new SensorReading(sensorId);
-        })
+        });
 
         it('privacy', () => {
             expect(readingObject.privacy).to.be.not.undefined;
-            expect(() => readingObject.privacy = 'privacy').to.throw();
-        })
+            expect(() => (readingObject.privacy = 'privacy')).to.throw();
+        });
 
         it('reading', () => {
             expect(readingObject.reading).to.be.undefined;
 
             readingObject.reading = new CameraReading();
             expect(readingObject.reading).to.not.be.undefined;
-        })
-    })
-})
+        });
+    });
+});

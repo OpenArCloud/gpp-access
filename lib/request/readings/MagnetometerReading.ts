@@ -3,10 +3,9 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import XyzReading from "./XyzReading.js";
-
+import XyzReading from './XyzReading';
 
 /**
  * Structure for a Magnetometer sensor reading
  */
-export default class MagnetometerReading extends XyzReading {};
+export default class MagnetometerReading extends XyzReading {}

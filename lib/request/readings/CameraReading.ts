@@ -3,13 +3,14 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import { IMAGEFORMAT } from "../../GppGlobals.js";
-import ImageOrientation from '../options/ImageOrientation.js';
+import { IMAGEFORMAT } from '../../GppGlobals';
+import ImageOrientation from '../options/ImageOrientation';
 
 /**
  * Structure for a camera sensor reading
  */
 export default class CameraReading {
+    private reading;
     /**
      * Constructor, setting the required properties
      *
@@ -19,14 +20,14 @@ export default class CameraReading {
      * @param sequenceNumber  Number  Sequence of the image. Default is 0
      * @param imageOrientation  ImageOrientation  The orientation of the image, defined with an ImageOrientation object
      */
-    constructor(imageFormat, size, imageBytes, sequenceNumber = 0, imageOrientation = undefined) {
+    constructor(imageFormat: string, size: string[], imageBytes: string, sequenceNumber: number = 0, imageOrientation: ImageOrientation | undefined = undefined) {
         this.reading = {
             sequenceNumber: sequenceNumber,
             imageFormat: imageFormat,
             size: size,
             imageBytes: imageBytes,
-            imageOrientation: imageOrientation
-        }
+            imageOrientation: imageOrientation,
+        };
     }
 
     get sequenceNumber() {
@@ -42,8 +43,7 @@ export default class CameraReading {
     }
 
     set imageFormat(format) {
-        if (!IMAGEFORMAT.hasOwnProperty(format))
-            throw new Error('Unknown image format');
+        if (!IMAGEFORMAT.hasOwnProperty(format)) throw new Error('Unknown image format');
 
         this.reading.imageFormat = format;
     }
@@ -69,13 +69,10 @@ export default class CameraReading {
     }
 
     set imageOrientation(orientation) {
-        if (!(orientation instanceof ImageOrientation))
-            throw new Error('Image orientation parameter of type ImageOrientation required');
+        if (!(orientation instanceof ImageOrientation)) throw new Error('Image orientation parameter of type ImageOrientation required');
 
         this.reading.imageOrientation = orientation;
-        return this;
     }
-
 
     /**
      * Providing the correct data to JSON.stringify()
@@ -83,10 +80,8 @@ export default class CameraReading {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
-        if (key !== '' && key !== 'reading')
-            return this.reading[key];
-        else
-            return this.reading;
+    toJSON(key: keyof typeof this.reading | '' | 'reading') {
+        if (key !== '' && key !== 'reading') return this.reading[key];
+        else return this.reading;
     }
-};
+}

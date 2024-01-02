@@ -5,8 +5,7 @@
 
 import chai from 'chai';
 
-import BluetoothReading from "../../../request/readings/BluetoothReading.js";
-
+import BluetoothReading from '../../../request/readings/BluetoothReading';
 
 const expect = chai.expect;
 
@@ -17,7 +16,6 @@ const name = 'name';
 const defaultJson = `"address":"${address}","RSSI":${rssi},"name":"${name}"`;
 
 let reading;
-
 
 describe('BluetoothReading', () => {
     describe('constructor', () => {

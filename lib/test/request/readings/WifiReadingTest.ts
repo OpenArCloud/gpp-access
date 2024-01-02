@@ -5,8 +5,7 @@
 
 import chai from 'chai';
 
-import WifiReading from "../../../request/readings/WifiReading.js";
-
+import WifiReading from '../../../request/readings/WifiReading';
 
 const expect = chai.expect;
 
@@ -17,10 +16,9 @@ const ssid = 'ssid';
 const scanTimeStart = 'now';
 const scanTimeEnd = 'later';
 
-const defaultJson = `"BSSID":"${bssid}","frequency":${frequency},"RSSI":${rssi},"SSID":"${ssid}","scanTimeStart":"${scanTimeStart}","scanTimeEnd":"${scanTimeEnd}"`
+const defaultJson = `"BSSID":"${bssid}","frequency":${frequency},"RSSI":${rssi},"SSID":"${ssid}","scanTimeStart":"${scanTimeStart}","scanTimeEnd":"${scanTimeEnd}"`;
 
 let reading;
-
 
 describe('WifiReading', () => {
     describe('constructor', () => {
