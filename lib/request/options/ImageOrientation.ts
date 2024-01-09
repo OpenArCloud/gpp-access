@@ -3,7 +3,7 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-export default class ImageOrientation {
+export class ImageOrientation {
     private orientation;
     constructor(mirrored: boolean, rotation: number) {
         this.orientation = {

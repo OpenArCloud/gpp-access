@@ -3,9 +3,9 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import XyzReading from './XyzReading';
+import { XyzReading } from './XyzReading';
 
 /**
  * Structure for an Accelerometer sensor reading
  */
-export default class AccelerometerReading extends XyzReading {}
+export class AccelerometerReading extends XyzReading {}

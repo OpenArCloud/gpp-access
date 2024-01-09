@@ -9,6 +9,8 @@ import deepMerge from 'deepmerge';
 export const defaultEndpoint = 'scrs/geopose';
 export const objectEndpoint = 'scrs/geopose_objs';
 
+export * from './request';
+
 /** Base options for fetch to post json payload */
 const JSONPOST = {
     method: 'POST',

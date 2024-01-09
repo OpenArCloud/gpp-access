@@ -4,12 +4,12 @@
 */
 
 import { IMAGEFORMAT } from '../../GppGlobals';
-import ImageOrientation from '../options/ImageOrientation';
+import { ImageOrientation } from '../options/ImageOrientation';
 
 /**
  * Structure for a camera sensor reading
  */
-export default class CameraReading {
+export class CameraReading {
     private reading;
     /**
      * Constructor, setting the required properties

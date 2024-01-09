@@ -6,7 +6,7 @@
 /**
  * Structure for a Wifi sensor reading
  */
-export default class WifiReading {
+export class WifiReading {
     private reading: {
         BSSID: string;
         frequency: number;

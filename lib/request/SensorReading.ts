@@ -3,20 +3,20 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import Privacy from './Privacy';
-import AccelerometerReading from './readings/AccelerometerReading';
-import BluetoothReading from './readings/BluetoothReading';
-import CameraReading from './readings/CameraReading';
-import GeoLocationReading from './readings/GeoLocationReading';
-import MagnetometerReading from './readings/MagnetometerReading';
-import WifiReading from './readings/WifiReading';
+import { Privacy } from './Privacy';
+import { AccelerometerReading } from './readings/AccelerometerReading';
+import { BluetoothReading } from './readings/BluetoothReading';
+import { CameraReading } from './readings/CameraReading';
+import { GeoLocationReading } from './readings/GeoLocationReading';
+import { MagnetometerReading } from './readings/MagnetometerReading';
+import { WifiReading } from './readings/WifiReading';
 
 // import { READINGTYPE } from '../GppGlobals';
 
 /**
  * Structure for the data of the sensors defined in the Sensor structure.
  */
-export default class SensorReading {
+export class SensorReading {
     private readingObject: {
         sensorId: string;
         timestamp: string;

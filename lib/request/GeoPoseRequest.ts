@@ -3,18 +3,18 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import Sensor from './Sensor';
-import SensorReading from './SensorReading';
+import { Sensor } from './Sensor';
+import { SensorReading } from './SensorReading';
 import { SENSORTYPE } from '../GppGlobals';
-import CameraReading from './readings/CameraReading';
-import GeoLocationReading from './readings/GeoLocationReading';
-import AccelerometerReading from './readings/AccelerometerReading';
-import BluetoothReading from './readings/BluetoothReading';
-import GyroscopeReading from './readings/GyroscopeReading';
-import MagnetometerReading from './readings/MagnetometerReading';
-import WifiReading from './readings/WifiReading';
+import { CameraReading } from './readings/CameraReading';
+import { GeoLocationReading } from './readings/GeoLocationReading';
+import { AccelerometerReading } from './readings/AccelerometerReading';
+import { BluetoothReading } from './readings/BluetoothReading';
+import { GyroscopeReading } from './readings/GyroscopeReading';
+import { MagnetometerReading } from './readings/MagnetometerReading';
+import { WifiReading } from './readings/WifiReading';
 import { CameraParam } from './options/CameraParam';
-import ImageOrientation from './options/ImageOrientation';
+import { ImageOrientation } from './options/ImageOrientation';
 
 const DEFAULTTYPE = 'geopose';
 
@@ -23,7 +23,7 @@ const DEFAULTTYPE = 'geopose';
  *
  * Implementation based on the GeoPose request protocoll as defined by Open AR Cloud.
  */
-export default class GeoPoseRequest {
+export class GeoPoseRequest {
     private request: {
         id: string;
         timestamp: string;

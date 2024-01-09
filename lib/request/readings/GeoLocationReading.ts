@@ -6,7 +6,7 @@
 /**
  * Structure for a Geolocation sensor reading
  */
-export default class GeoLocationReading {
+export class GeoLocationReading {
     private reading;
     /**
      * Constructor, setting the required properties

@@ -3,7 +3,7 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-export default class XyzReading {
+export class XyzReading {
     private reading;
     constructor(x: number, y: number, z: number) {
         this.reading = {

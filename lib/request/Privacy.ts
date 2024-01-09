@@ -6,7 +6,7 @@
 /**
  * Defines the data handling on the server
  */
-export default class Privacy {
+export class Privacy {
     private privacy;
     constructor() {
         this.privacy = {

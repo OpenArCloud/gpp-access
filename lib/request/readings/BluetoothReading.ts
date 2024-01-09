@@ -6,7 +6,7 @@
 /**
  * Structure for a bluetooth sensor reading
  */
-export default class BluetoothReading {
+export class BluetoothReading {
     private reading;
     /**
      * Constructor, setting the required properties

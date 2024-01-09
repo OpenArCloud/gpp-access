@@ -3,14 +3,14 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import { Quaternion } from '..';
+import type { Quaternion } from '..';
 import { SENSORTYPE } from '../GppGlobals';
 import { CameraParam } from './options/CameraParam';
 
 /**
  * Defines a sensor used for the GeoPoseRequest
  */
-export default class Sensor {
+export class Sensor {
     private sensor: {
         id: string;
         type: string;
