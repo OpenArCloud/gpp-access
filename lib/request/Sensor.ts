@@ -3,7 +3,7 @@
   This code is licensed under MIT license (see LICENSE.md for details)
 */
 
-import type { Quaternion } from '..';
+import type { QuaternionType } from '..';
 import { SENSORTYPE } from '../GppGlobals';
 import { CameraParam } from './options/CameraParam';
 
@@ -17,7 +17,7 @@ export class Sensor {
         name?: string;
         model?: string;
         rigIdentifier?: string;
-        rigRotation?: Quaternion;
+        rigRotation?: QuaternionType;
         rigTranslation?: number[];
         params?: CameraParam;
     };

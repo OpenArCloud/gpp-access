@@ -10,6 +10,7 @@ export const defaultEndpoint = 'scrs/geopose';
 export const objectEndpoint = 'scrs/geopose_objs';
 
 export * from './request';
+export * from './GppGlobals';
 
 /** Base options for fetch to post json payload */
 const JSONPOST = {
@@ -181,25 +182,25 @@ export const geoPoseReqSchema = z.object({
     priorPoses: z.array(geoPoseRespSchema).optional(),
 });
 
-export type GeoposeRequest = z.infer<typeof geoPoseReqSchema>;
-export type GeoposeResponse = z.infer<typeof geoPoseRespSchema>;
-export type Geopose = z.infer<typeof geoPoseSchema>;
-export type GeoposeAccuracy = z.infer<typeof geoPoseAccuracySchema>;
-export type SensorReadings = z.infer<typeof sensorReadingsSchema>;
-export type Sensor = z.infer<typeof sensorSchema>;
-export type Vector3 = z.infer<typeof vector3Schema>;
-export type Quaternion = z.infer<typeof quaternionSchema>;
-export type Position = z.infer<typeof positionSchema>;
-export type MagnetometerReading = z.infer<typeof magnetometerReadingSchema>;
-export type GyroscopeReading = z.infer<typeof gyroscopeReadingSchema>;
-export type AccelerometerReading = z.infer<typeof accelerometerReadingSchema>;
-export type BluetoothReading = z.infer<typeof bluetoothReadingSchema>;
-export type WiFiReading = z.infer<typeof wiFiReadingSchema>;
-export type GeolocationReading = z.infer<typeof geolocationReadingSchema>;
-export type CameraReading = z.infer<typeof cameraReadingSchema>;
-export type ImageOrientation = z.infer<typeof imageOrientationSchema>;
-export type Privacy = z.infer<typeof privacySchema>;
-export type CameraParam = z.infer<typeof cameraParamSchema>;
+export type GeoposeRequestType = z.infer<typeof geoPoseReqSchema>;
+export type GeoposeResponseType = z.infer<typeof geoPoseRespSchema>;
+export type GeoposeType = z.infer<typeof geoPoseSchema>;
+export type GeoposeAccuracyType = z.infer<typeof geoPoseAccuracySchema>;
+export type SensorReadingsType = z.infer<typeof sensorReadingsSchema>;
+export type SensorType = z.infer<typeof sensorSchema>;
+export type Vector3Type = z.infer<typeof vector3Schema>;
+export type QuaternionType = z.infer<typeof quaternionSchema>;
+export type PositionType = z.infer<typeof positionSchema>;
+export type MagnetometerReadingType = z.infer<typeof magnetometerReadingSchema>;
+export type GyroscopeReadingType = z.infer<typeof gyroscopeReadingSchema>;
+export type AccelerometerReadingType = z.infer<typeof accelerometerReadingSchema>;
+export type BluetoothReadingType = z.infer<typeof bluetoothReadingSchema>;
+export type WiFiReadingType = z.infer<typeof wiFiReadingSchema>;
+export type GeolocationReadingType = z.infer<typeof geolocationReadingSchema>;
+export type CameraReadingType = z.infer<typeof cameraReadingSchema>;
+export type ImageOrientationType = z.infer<typeof imageOrientationSchema>;
+export type PrivacyType = z.infer<typeof privacySchema>;
+export type CameraParamType = z.infer<typeof cameraParamSchema>;
 
 /**
  * Convenience function to send GeoPose request to GeoPose service
@@ -211,7 +212,7 @@ export type CameraParam = z.infer<typeof cameraParamSchema>;
  * @param options  object  Additional options for the fetch. Default options will be overwritten.
  * @returns {Promise<Response>}  Response promise from GeoPose service, resolving to GeoPoseResponse json
  */
-export async function sendRequest(serviceUrl: string, payload: string, options: RequestInit = {}): Promise<GeoposeResponse> {
+export async function sendRequest(serviceUrl: string, payload: string, options: RequestInit = {}): Promise<GeoposeResponseType> {
     if (doValidation) {
         validate(geoPoseReqSchema, payload);
     }
