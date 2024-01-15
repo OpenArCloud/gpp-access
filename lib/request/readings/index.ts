@@ -1,3 +1,9 @@
+/*
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
+*/
+
 export * from './AccelerometerReading';
 export * from './BluetoothReading';
 export * from './CameraReading';

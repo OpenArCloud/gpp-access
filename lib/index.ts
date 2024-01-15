@@ -1,13 +1,17 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
 import deepMerge from 'deepmerge';
 
 /** Endpoints for GeoPose services returned from Spatial Service Discovery */
-export const defaultEndpoint = 'scrs/geopose';
-export const objectEndpoint = 'scrs/geopose_objs';
+export const defaultEndpoint = 'geopose';
+export const objectEndpoint = 'geopose_objs';
 
 export * from './request';
 export * from './GppGlobals';
