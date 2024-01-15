@@ -5,7 +5,7 @@
 
 import chai from 'chai';
 
-import AccelerometerReading from '../../../request/readings/AccelerometerReading';
+import { AccelerometerReading } from '../../../request/readings/AccelerometerReading';
 
 const expect = chai.expect;
 

@@ -5,7 +5,7 @@
 
 import chai from 'chai';
 
-import BluetoothReading from '../../../request/readings/BluetoothReading';
+import { BluetoothReading } from '../../../request/readings/BluetoothReading';
 
 const expect = chai.expect;
 

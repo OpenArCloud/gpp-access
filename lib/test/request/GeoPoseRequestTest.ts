@@ -5,9 +5,9 @@
 
 import chai from 'chai';
 
-import GeoPoseRequest from '../../request/GeoPoseRequest';
-import Sensor from '../../request/Sensor';
-import SensorReading from '../../request/SensorReading';
+import { GeoPoseRequest } from '../../request/GeoPoseRequest';
+import { Sensor } from '../../request/Sensor';
+import { SensorReading } from '../../request/SensorReading';
 import { SENSORTYPE } from '../../GppGlobals';
 
 const expect = chai.expect;

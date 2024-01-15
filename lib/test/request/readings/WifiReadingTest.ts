@@ -5,7 +5,7 @@
 
 import chai from 'chai';
 
-import WifiReading from '../../../request/readings/WifiReading';
+import { WifiReading } from '../../../request/readings/WifiReading';
 
 const expect = chai.expect;
 

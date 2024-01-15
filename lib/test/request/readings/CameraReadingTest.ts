@@ -5,8 +5,8 @@
 
 import chai from 'chai';
 
-import CameraReading from '../../../request/readings/CameraReading';
-import ImageOrientation from '../../../request/options/ImageOrientation';
+import { CameraReading } from '../../../request/readings/CameraReading';
+import { ImageOrientation } from '../../../request/options/ImageOrientation';
 import { IMAGEFORMAT } from '../../../GppGlobals';
 
 const expect = chai.expect;

@@ -5,7 +5,7 @@
 
 import chai from 'chai';
 
-import GeoLocationReading from '../../../request/readings/GeoLocationReading';
+import { GeoLocationReading } from '../../../request/readings/GeoLocationReading';
 
 const expect = chai.expect;
 

@@ -5,8 +5,8 @@
 
 import chai from 'chai';
 
-import SensorReading from '../../request/SensorReading';
-import CameraReading from '../../request/readings/CameraReading';
+import { SensorReading } from '../../request/SensorReading';
+import { CameraReading } from '../../request/readings/CameraReading';
 
 const expect = chai.expect;
 

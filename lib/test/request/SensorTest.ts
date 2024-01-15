@@ -5,7 +5,7 @@
 
 import chai from 'chai';
 
-import Sensor from '../../request/Sensor';
+import { Sensor } from '../../request/Sensor';
 import { CameraParam } from '../../request/options/CameraParam';
 import { SENSORTYPE } from '../../GppGlobals';
 
