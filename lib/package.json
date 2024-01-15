@@ -2,7 +2,7 @@
   "name": "@oarc/gpp-access",
   "version": "0.1.0",
   "description": "Utilities around the Open AR Cloud GeoPoseProtocol",
-  "main": "dist/index.ts",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
