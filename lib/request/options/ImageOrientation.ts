@@ -1,14 +1,19 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
-export default class ImageOrientation {
-    constructor(mirrored, rotation) {
+export class ImageOrientation {
+    private orientation;
+    constructor(mirrored: boolean, rotation: number) {
         this.orientation = {
             mirrored: mirrored,
-            rotation: rotation
-        }
+            rotation: rotation,
+        };
     }
 
     get mirrored() {
@@ -27,17 +32,14 @@ export default class ImageOrientation {
         this.orientation.rotation = rotation;
     }
 
-
     /**
      * Providing the correct data to JSON.stringify()
      *
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
-        if (key !== 'imageOrientation')
-            return this.orientation[key];
-        else
-            return this.orientation;
+    toJSON(key: keyof typeof this.orientation | 'imageOrientation') {
+        if (key !== 'imageOrientation') return this.orientation[key];
+        else return this.orientation;
     }
 }

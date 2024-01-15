@@ -1,11 +1,14 @@
 {
   "name": "@oarc/gpp-access",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "Utilities around the Open AR Cloud GeoPoseProtocol",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "scripts": {
-    "test": "mocha"
+    "test": "ts-mocha -p ./tsconfig-for-ts-mocha.json test/**/*.ts",
+    "prepublish": "tsc",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -28,13 +31,16 @@
   },
   "homepage": "https://github.com/OpenArCloud/gpp-access#readme",
   "dependencies": {
-    "ajv": "^8.11.0",
-    "ajv-formats": "^2.1.1",
-    "deepmerge": "^4.2.2"
+    "deepmerge": "^4.2.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.11",
+    "@types/mocha": "^10.0.6",
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "ts-mocha": "^10.0.0",
+    "typescript": "^5.3.3"
   }
 }

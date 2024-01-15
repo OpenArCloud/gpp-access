@@ -1,12 +1,17 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
 /**
  * Structure for a Geolocation sensor reading
  */
-export default class GeoLocationReading {
+export class GeoLocationReading {
+    private reading;
     /**
      * Constructor, setting the required properties
      *
@@ -23,7 +28,7 @@ export default class GeoLocationReading {
      * @param speed  Number  Denotes the magnitude of the horizontal component of the hosting device's current velocity
      *      and is specified in meters per second. MUST be a non-negative real number.
      */
-    constructor(lat, lon, alt, accuracy, altAccuracy, heading, speed) {
+    constructor(lat: number, lon: number, alt: number, accuracy: number, altAccuracy: number, heading: number, speed: number) {
         this.reading = {
             latitude: lat,
             longitude: lon,
@@ -31,24 +36,24 @@ export default class GeoLocationReading {
             accuracy: accuracy,
             altitudeAccuracy: altAccuracy,
             heading: heading,
-            speed: speed
-        }
+            speed: speed,
+        };
     }
 
     get latitude() {
-        return this.reading.lat;
+        return this.reading.latitude;
     }
 
     set latitude(lat) {
-        this.reading.lat = lat;
+        this.reading.latitude = lat;
     }
 
     get longitude() {
-        return this.reading.lon;
+        return this.reading.longitude;
     }
 
     set longitude(lon) {
-        this.reading.lon = lon;
+        this.reading.longitude = lon;
     }
 
     get altitude() {
@@ -91,17 +96,14 @@ export default class GeoLocationReading {
         this.reading.speed = speed;
     }
 
-
     /**
      * Providing the correct data to JSON.stringify()
      *
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
-        if (key !== '' && key !== 'reading')
-            return this.reading[key];
-        else
-            return this.reading;
+    toJSON(key: keyof typeof this.reading | '' | 'reading') {
+        if (key !== '' && key !== 'reading') return this.reading[key];
+        else return this.reading;
     }
-};
+}

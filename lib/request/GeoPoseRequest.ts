@@ -1,36 +1,49 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
-import Sensor from './Sensor.js';
-import SensorReading from './SensorReading.js';
-import { SENSORTYPE } from "../GppGlobals.js";
-import CameraReading from "./readings/CameraReading.js";
-import GeoLocationReading from "./readings/GeoLocationReading.js";
-import AccelerometerReading from "./readings/AccelerometerReading.js";
-import BluetoothReading from "./readings/BluetoothReading.js";
-import GyroscopeReading from "./readings/GyroscopeReading.js";
-import MagnetometerReading from "./readings/MagnetometerReading.js";
-import WifiReading from "./readings/WifiReading.js";
-
+import { Sensor } from './Sensor';
+import { SensorReading } from './SensorReading';
+import { SENSORTYPE } from '../GppGlobals';
+import { CameraReading } from './readings/CameraReading';
+import { GeoLocationReading } from './readings/GeoLocationReading';
+import { AccelerometerReading } from './readings/AccelerometerReading';
+import { BluetoothReading } from './readings/BluetoothReading';
+import { GyroscopeReading } from './readings/GyroscopeReading';
+import { MagnetometerReading } from './readings/MagnetometerReading';
+import { WifiReading } from './readings/WifiReading';
+import { CameraParam } from './options/CameraParam';
+import { ImageOrientation } from './options/ImageOrientation';
 
 const DEFAULTTYPE = 'geopose';
-
 
 /**
  * Root class of a GeoPose request, used to request a GeoPose based on the provided sensor data
  *
  * Implementation based on the GeoPose request protocoll as defined by Open AR Cloud.
  */
-export default class GeoPoseRequest {
+export class GeoPoseRequest {
+    private request: {
+        id: string;
+        timestamp: string;
+        type: string;
+        sensors?: Sensor[];
+        sensorReadings?: SensorReading[];
+        priorPoses?: GeoPoseRequest[];
+    };
+    private idGen;
     /**
      * Constructor, setting the required properties
      *
      * @param id  String  ?
      * @param type  Type of the request. 'geopose' by default
      */
-    constructor(id, type = DEFAULTTYPE) {
+    constructor(id: string, type = DEFAULTTYPE) {
         this.request = {
             id: id,
             timestamp: new Date().toJSON(),
@@ -69,8 +82,7 @@ export default class GeoPoseRequest {
      * @returns {Sensor[],SensorReading[]}
      */
     get sensorData() {
-        if (this.request.sensors === undefined)
-            return [[],[]];
+        if (this.request.sensors === undefined) return [[], []];
 
         return [this.request.sensors, this.request.sensorReadings];
     }
@@ -84,15 +96,12 @@ export default class GeoPoseRequest {
      * @param reading  SensorReading  The SensorReading to add
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addSensorData(sensor, reading) {
-        if (!(sensor instanceof Sensor) || !(reading instanceof SensorReading))
-            throw new Error('Sensor or SensorReading wrong type');
+    addSensorData(sensor: Sensor, reading: SensorReading) {
+        if (!(sensor instanceof Sensor) || !(reading instanceof SensorReading)) throw new Error('Sensor or SensorReading wrong type');
 
-        if (sensor.id !== reading.sensorId)
-            throw new Error('Sensor IDs in sensor and reading need to be identical');
+        if (sensor.id !== reading.sensorId) throw new Error('Sensor IDs in sensor and reading need to be identical');
 
-        if (this.request.sensors !== undefined && this.request.sensors.filter((item) => item.id === sensor.id).length !== 0)
-            throw new Error('Sensor  IDs need to be unique for a request');
+        if (this.request.sensors !== undefined && this.request.sensors.filter((item) => item.id === sensor.id).length !== 0) throw new Error('Sensor  IDs need to be unique for a request');
 
         if (this.request.sensors === undefined) {
             this.request.sensors = [];
@@ -100,7 +109,7 @@ export default class GeoPoseRequest {
         }
 
         this.request.sensors.push(sensor);
-        this.request.sensorReadings.push(reading);
+        this.request.sensorReadings?.push(reading);
 
         return this;
     }
@@ -113,12 +122,11 @@ export default class GeoPoseRequest {
      * @param z  Number  Acceleration of the device along the device's z axis
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addAccelerometerData(x, y, z) {
+    addAccelerometerData(x: number, y: number, z: number) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new AccelerometerReading(x, y, z));
+        const reading = new SensorReading(id).setReading(new AccelerometerReading(x, y, z));
 
-        this.addSensorData(new Sensor(id, SENSORTYPE.accelerometer), reading)
+        this.addSensorData(new Sensor(id, SENSORTYPE.accelerometer), reading);
 
         return this;
     }
@@ -131,10 +139,9 @@ export default class GeoPoseRequest {
      * @param name  String  name of the sensor
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addBluetoothData(address, rssi, name) {
+    addBluetoothData(address: string, rssi: number, name: string) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new BluetoothReading(address, rssi, name))
+        const reading = new SensorReading(id).setReading(new BluetoothReading(address, rssi, name));
 
         this.addSensorData(new Sensor(id, SENSORTYPE.bluetooth), reading);
 
@@ -152,10 +159,16 @@ export default class GeoPoseRequest {
      * @param cameraParams CameraParam  optional camera parameters as a CameraParam object
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addCameraData(imageFormat, size, imageBytes, sequenceNumber = 0, imageOrientation = undefined, cameraParams = undefined) {
+    addCameraData(
+        imageFormat: string,
+        size: string[],
+        imageBytes: string,
+        sequenceNumber: number = 0,
+        imageOrientation: ImageOrientation | undefined = undefined,
+        cameraParams: CameraParam | undefined = undefined
+    ) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new CameraReading(imageFormat, size, imageBytes, sequenceNumber, imageOrientation))
+        const reading = new SensorReading(id).setReading(new CameraReading(imageFormat, size, imageBytes, sequenceNumber, imageOrientation));
 
         const sensor = new Sensor(id, SENSORTYPE.camera);
         if (cameraParams) {
@@ -183,10 +196,9 @@ export default class GeoPoseRequest {
      *      and is specified in meters per second. MUST be a non-negative real number.
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addLocationData(latAngle, lonAngle, alt, accuracy, altAccuracy, heading, speed) {
+    addLocationData(latAngle: number, lonAngle: number, alt: number, accuracy: number, altAccuracy: number, heading: number, speed: number) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new GeoLocationReading(latAngle, lonAngle, alt, accuracy, altAccuracy, heading, speed));
+        const reading = new SensorReading(id).setReading(new GeoLocationReading(latAngle, lonAngle, alt, accuracy, altAccuracy, heading, speed));
 
         this.addSensorData(new Sensor(id, SENSORTYPE.geolocation), reading);
 
@@ -201,10 +213,9 @@ export default class GeoPoseRequest {
      * @param z  Number  Angular velocity of the device along the device's z axis
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addGyroscopeData(x, y, z) {
+    addGyroscopeData(x: number, y: number, z: number) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new GyroscopeReading(x, y, z));
+        const reading = new SensorReading(id).setReading(new GyroscopeReading(x, y, z));
 
         this.addSensorData(new Sensor(id, SENSORTYPE.gyroscope), reading);
 
@@ -219,10 +230,9 @@ export default class GeoPoseRequest {
      * @param z  Number  Magnetic field around the device's z axis
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addMagnetometerData(x, y, z) {
+    addMagnetometerData(x: number, y: number, z: number) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new MagnetometerReading(x, y, z));
+        const reading = new SensorReading(id).setReading(new MagnetometerReading(x, y, z));
 
         this.addSensorData(new Sensor(id, SENSORTYPE.magnetometer), reading);
 
@@ -240,10 +250,9 @@ export default class GeoPoseRequest {
      * @param scanTimeEnd  String
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addWifiData(bssid, frequency, rssi, ssid, scanTimeStart, scanTimeEnd) {
+    addWifiData(bssid: string, frequency: number, rssi: number, ssid: string, scanTimeStart: string, scanTimeEnd: string) {
         const id = this.idGen.next().value;
-        const reading = new SensorReading(id)
-            .setReading(new WifiReading(bssid, frequency, rssi, ssid, scanTimeStart, scanTimeEnd))
+        const reading = new SensorReading(id).setReading(new WifiReading(bssid, frequency, rssi, ssid, scanTimeStart, scanTimeEnd));
 
         this.addSensorData(new Sensor(id, SENSORTYPE.wifi), reading);
 
@@ -273,14 +282,12 @@ export default class GeoPoseRequest {
      * @param priorPoses  GeoPoseRequest[]  The objects to add to the GeoPoseRequest
      * @returns {GeoPoseRequest}  To allow method chaining
      */
-    addPriorPoses(priorPoses) {
-        if (this.request.priorPoses === undefined)
-            this.request.priorPoses = [];
+    addPriorPoses(priorPoses: GeoPoseRequest[]) {
+        if (this.request.priorPoses === undefined) this.request.priorPoses = [];
 
         if (priorPoses instanceof Array) {
             priorPoses.forEach((pose) => {
-                if (!(pose instanceof GeoPoseRequest))
-                    throw new Error('Array of type GeoPoseRequest required');
+                if (!(pose instanceof GeoPoseRequest)) throw new Error('Array of type GeoPoseRequest required');
             });
         } else {
             throw new Error('Parameter of type Array required');
@@ -298,18 +305,15 @@ export default class GeoPoseRequest {
         delete this.request.priorPoses;
     }
 
-
     /**
      * Providing the correct data to JSON.stringify()
      *
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
-        if (key)
-            return this.request[key];
-        else
-            return this.request;
+    toJSON(key: keyof typeof this.request) {
+        if (key) return this.request[key];
+        else return this.request;
     }
 
     /**
@@ -317,7 +321,7 @@ export default class GeoPoseRequest {
      *
      * @returns {Generator<String, void, *>}
      */
-    *idGenerator() {
+    *idGenerator(): Generator<string> {
         let id = 0;
         while (true) {
             yield id.toString();
@@ -325,4 +329,3 @@ export default class GeoPoseRequest {
         }
     }
 }
-

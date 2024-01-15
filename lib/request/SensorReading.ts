@@ -1,28 +1,44 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
-import Privacy from "./Privacy.js";
+import { Privacy } from './Privacy';
+import { AccelerometerReading } from './readings/AccelerometerReading';
+import { BluetoothReading } from './readings/BluetoothReading';
+import { CameraReading } from './readings/CameraReading';
+import { GeoLocationReading } from './readings/GeoLocationReading';
+import { MagnetometerReading } from './readings/MagnetometerReading';
+import { WifiReading } from './readings/WifiReading';
 
-// import { READINGTYPE } from '../GppGlobals.js';
-
+// import { READINGTYPE } from '../GppGlobals';
 
 /**
  * Structure for the data of the sensors defined in the Sensor structure.
  */
-export default class SensorReading {
+export class SensorReading {
+    private readingObject: {
+        sensorId: string;
+        timestamp: string;
+        privacy: Privacy;
+        reading?: AccelerometerReading | BluetoothReading | CameraReading | GeoLocationReading | MagnetometerReading | WifiReading;
+    };
+
     /**
      * Constructor, setting the required properties
      *
      * @param sensorId  String  Id of the Sensor object this reading belongs to
      * @param timestamp  Optional, timestamp of the reading
      */
-    constructor(sensorId, timestamp = new Date().toJSON()) {
+    constructor(sensorId: string, timestamp = new Date().toJSON()) {
         this.readingObject = {
             sensorId: sensorId,
             timestamp: timestamp,
-            privacy: new Privacy()
+            privacy: new Privacy(),
         };
     }
 
@@ -42,11 +58,11 @@ export default class SensorReading {
         this.readingObject.timestamp = timestamp;
     }
 
-    get reading() {
+    get reading(): AccelerometerReading | BluetoothReading | CameraReading | GeoLocationReading | MagnetometerReading | WifiReading | undefined {
         return this.readingObject.reading;
     }
 
-    set reading(reading) {
+    set reading(reading: AccelerometerReading | BluetoothReading | CameraReading | GeoLocationReading | MagnetometerReading | WifiReading) {
         this.setReading(reading);
     }
 
@@ -59,7 +75,7 @@ export default class SensorReading {
      *      The sensor data according to the accompanying Sensor type
      * @returns {SensorReading}  To allow method chaining
      */
-    setReading(reading) {
+    setReading(reading: AccelerometerReading | BluetoothReading | CameraReading | GeoLocationReading | MagnetometerReading | WifiReading) {
         this._verifyReadingType(reading);
 
         this.readingObject.reading = reading;
@@ -77,13 +93,10 @@ export default class SensorReading {
      * @returns {SensorReading}  To allow method chaining
      */
     set privacy(privacy) {
-        if (!(privacy instanceof Privacy))
-            throw new Error('Parameter needs to be of type Privacy');
+        if (!(privacy instanceof Privacy)) throw new Error('Parameter needs to be of type Privacy');
 
         this.readingObject.privacy = privacy;
-        return this;
     }
-
 
     /**
      * Verify that the provided type is valid
@@ -93,7 +106,7 @@ export default class SensorReading {
      * @param type  Any  The type to check
      * @private
      */
-    _verifyReadingType(type) {
+    _verifyReadingType(type: any) {
         // TODO: Verify correct parameter type (without TS)
         // const isValid = READINGTYPE.reduce((accu, item) => {
         //     return accu === true || type instanceof item;
@@ -109,13 +122,13 @@ export default class SensorReading {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
+    toJSON(key: any) {
         const isNumericKey = !isNaN(key) && !isNaN(parseFloat(key));
 
         if (!isNumericKey && key) {
-            return this.readingObject[key];
+            return this.readingObject[key as keyof typeof this.readingObject];
         } else {
             return this.readingObject;
         }
     }
-};
+}

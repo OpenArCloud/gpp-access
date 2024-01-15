@@ -1,12 +1,17 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
 /**
  * Structure for a bluetooth sensor reading
  */
-export default class BluetoothReading {
+export class BluetoothReading {
+    private reading;
     /**
      * Constructor, setting the required properties
      *
@@ -14,12 +19,12 @@ export default class BluetoothReading {
      * @param rssi  Number  rssi from the sensor
      * @param name  String  name of the sensor
      */
-    constructor(address, rssi, name) {
+    constructor(address: string, rssi: number, name: string) {
         this.reading = {
             address: address,
             RSSI: rssi,
-            name: name
-        }
+            name: name,
+        };
     }
 
     get address() {
@@ -46,17 +51,14 @@ export default class BluetoothReading {
         this.reading.name = name;
     }
 
-
     /**
      * Providing the correct data to JSON.stringify()
      *
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
-        if (key !== '' && key !== 'reading')
-            return this.reading[key];
-        else
-            return this.reading;
+    toJSON(key: keyof typeof this.reading | '' | 'reading') {
+        if (key !== '' && key !== 'reading') return this.reading[key];
+        else return this.reading;
     }
-};
+}

@@ -1,6 +1,10 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
 /**
@@ -20,14 +24,21 @@ export const CAMERAMODEL = {
     SIMPLE_RADIAL_FISHEYE: 'SIMPLE_RADIAL_FISHEYE', // f, cx, cy, k
     RADIAL_FISHEYE: 'RADIAL_FISHEYE', // f, cx, cy, k1, k2
     THIN_PRISM: 'THIN_PRISM', // fx, fy, cx, cy, k1, k2, p1, p2, k3, k4, sx1, sy1
-    UNKNOWN: 'UNKNOWN'
-}
+    UNKNOWN: 'UNKNOWN',
+};
 
 export class CameraParam {
+    private params: {
+        model: string;
+        modelParams: number[];
+        minMaxDepth?: [number, number];
+        minMaxDisparity?: [number, number];
+    };
     constructor() {
-        this.params = {};
-        this.params.model = CAMERAMODEL.UNKNOWN;
-        this.params.modelParams = [];
+        this.params = {
+            model: CAMERAMODEL.UNKNOWN,
+            modelParams: [],
+        };
     }
 
     get model() {
@@ -81,9 +92,8 @@ export class CameraParam {
      * @param model  String  The model to check
      * @private
      */
-     _verifyCameraModel(model) {
-        if (!(CAMERAMODEL.hasOwnProperty(model)))
-            throw new Error('Invalid camera model');
+    _verifyCameraModel(model: string) {
+        if (!CAMERAMODEL.hasOwnProperty(model)) throw new Error('Invalid camera model');
     }
 
     /**
@@ -92,7 +102,7 @@ export class CameraParam {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key) {
+    toJSON(key: keyof typeof this.params | 'params' | '') {
         console.log(key);
         if (key !== '' && key !== 'params') {
             return this.params[key];

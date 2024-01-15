@@ -1,12 +1,15 @@
 /*
   (c) 2020 Open AR Cloud
   This code is licensed under MIT license (see LICENSE.md for details)
+
+  (c) 2024 Nokia
+  Licensed under the MIT License
+  SPDX-License-Identifier: MIT
 */
 
 import chai from 'chai';
 
-import GeoLocationReading from "../../../request/readings/GeoLocationReading.js";
-
+import { GeoLocationReading } from '../../../request/readings/GeoLocationReading';
 
 const expect = chai.expect;
 
@@ -21,7 +24,6 @@ const speed = 0;
 const defaultJson = `"latitude":${lat},"longitude":${lon},"altitude":${alt},"accuracy":${accuracy},"altitudeAccuracy":${altAccuracy},"heading":${heading},"speed":${speed}}`;
 
 let reading;
-
 
 describe('GeoLocationReadingTest', () => {
     describe('constructor', () => {
