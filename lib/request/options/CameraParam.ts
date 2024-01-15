@@ -26,9 +26,9 @@ export const CAMERAMODEL = {
 export class CameraParam {
     private params: {
         model: string;
-        modelParams: string[];
-        minMaxDepth?: string;
-        minMaxDisparity?: string;
+        modelParams: number[];
+        minMaxDepth?: [number, number];
+        minMaxDisparity?: [number, number];
     };
     constructor() {
         this.params = {
