@@ -11,6 +11,7 @@ import chai from 'chai';
 
 import { SensorReading } from '../../request/SensorReading';
 import { CameraReading } from '../../request/readings/CameraReading';
+import { IMAGEFORMAT } from '../../GppGlobals';
 
 const expect = chai.expect;
 
@@ -40,7 +41,10 @@ describe('SensorReadingTest', () => {
         it('reading', () => {
             expect(readingObject.reading).to.be.undefined;
 
-            readingObject.reading = new CameraReading();
+            const imageFormat = IMAGEFORMAT.GRAY8;
+            const imageSize = ['200', '200'];
+            const imageBytes = 'imageb64';
+            readingObject.reading = new CameraReading(imageFormat, imageSize, imageBytes);
             expect(readingObject.reading).to.not.be.undefined;
         });
     });
