@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { AccelerometerReading } from '../../../request/readings/AccelerometerReading';
 
