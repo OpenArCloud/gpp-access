@@ -19,12 +19,12 @@ export class CameraReading {
      * Constructor, setting the required properties
      *
      * @param imageFormat  String  The format of the image data. Possible values are available with IMAGEFORMAT global
-     * @param size  String[]  Vector2 with the dimensions of the image
+     * @param size  Number[]  Vector2 with the dimensions of the image as [width, height]
      * @param imageBytes  String  The base64 encoded image data
      * @param sequenceNumber  Number  Sequence of the image. Default is 0
      * @param imageOrientation  ImageOrientation  The orientation of the image, defined with an ImageOrientation object
      */
-    constructor(imageFormat: string, size: string[], imageBytes: string, sequenceNumber: number = 0, imageOrientation: ImageOrientation | undefined = undefined) {
+    constructor(imageFormat: string, size: number[], imageBytes: string, sequenceNumber: number = 0, imageOrientation: ImageOrientation | undefined = undefined) {
         this.reading = {
             sequenceNumber: sequenceNumber,
             imageFormat: imageFormat,

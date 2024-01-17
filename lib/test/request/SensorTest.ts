@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { Sensor } from '../../request/Sensor';
 import { CameraParam } from '../../request/options/CameraParam';

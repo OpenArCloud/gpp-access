@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { SensorReading } from '../../request/SensorReading';
 import { CameraReading } from '../../request/readings/CameraReading';
@@ -42,7 +43,7 @@ describe('SensorReadingTest', () => {
             expect(readingObject.reading).to.be.undefined;
 
             const imageFormat = IMAGEFORMAT.GRAY8;
-            const imageSize = ['200', '200'];
+            const imageSize = [200, 200];
             const imageBytes = 'imageb64';
             readingObject.reading = new CameraReading(imageFormat, imageSize, imageBytes);
             expect(readingObject.reading).to.not.be.undefined;

@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { GeoPoseRequest } from '../../request/GeoPoseRequest';
 import { Sensor } from '../../request/Sensor';
