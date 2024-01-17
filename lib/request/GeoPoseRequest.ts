@@ -161,7 +161,7 @@ export class GeoPoseRequest {
      */
     addCameraData(
         imageFormat: string,
-        size: string[],
+        size: number[],
         imageBytes: string,
         sequenceNumber: number = 0,
         imageOrientation: ImageOrientation | undefined = undefined,

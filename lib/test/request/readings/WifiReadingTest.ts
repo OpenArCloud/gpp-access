@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { WifiReading } from '../../../request/readings/WifiReading';
 

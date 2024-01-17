@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { CameraReading } from '../../../request/readings/CameraReading';
 import { ImageOrientation } from '../../../request/options/ImageOrientation';
@@ -17,7 +18,7 @@ const expect = chai.expect;
 
 const sequenceNumber = 0;
 const imageFormat = IMAGEFORMAT.GRAY8;
-const imageSize = ['200', '200'];
+const imageSize = [200, 200];
 const imageBytes = 'imageb64';
 const orientationMirrored = false;
 const orientationRotation = 6;

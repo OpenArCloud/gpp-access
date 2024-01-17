@@ -8,6 +8,7 @@
 */
 
 import chai from 'chai';
+import 'mocha';
 
 import { BluetoothReading } from '../../../request/readings/BluetoothReading';
 
