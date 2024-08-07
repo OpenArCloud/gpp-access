@@ -7,9 +7,11 @@
   SPDX-License-Identifier: MIT
 */
 
-export * from './Privacy';
+export * from '../response/GeoPose';
+export * from '../response/GeoPoseResponse';
 export * from './GeoPoseRequest';
-export * from './Sensor';
-export * from './SensorReading';
 export * from './options';
+export * from './Privacy';
 export * from './readings';
+export * from './Sensor';
+export * from './SensorReadings';

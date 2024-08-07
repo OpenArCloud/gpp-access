@@ -12,7 +12,7 @@ import 'mocha';
 
 import { GeoPoseRequest } from '../../request/GeoPoseRequest';
 import { Sensor } from '../../request/Sensor';
-import { SensorReading } from '../../request/SensorReading';
+import { SensorReadings } from '../../request/SensorReadings';
 import { SENSORTYPE } from '../../GppGlobals';
 
 const expect = chai.expect;
@@ -23,7 +23,7 @@ const defaultType = 'geopose';
 const sensorId = 'sensorid';
 
 let request: GeoPoseRequest;
-let now: string;
+let now: number;
 
 describe('GeoPoseRequest', () => {
     describe('constructor', () => {
@@ -47,7 +47,7 @@ describe('GeoPoseRequest', () => {
     describe('Accessors', () => {
         beforeEach(() => {
             request = new GeoPoseRequest(requestId);
-            now = new Date().toJSON();
+            now = new Date().getTime();
         });
 
         it('Timestamp', () => {
