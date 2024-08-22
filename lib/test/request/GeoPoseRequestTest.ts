@@ -11,19 +11,23 @@ import chai from 'chai';
 import 'mocha';
 
 import { GeoPoseRequest } from '../../request/GeoPoseRequest';
+import { GeoPose} from '../../response/GeoPose';
+import { GeoPoseResponse } from '../../response/GeoPoseResponse';
 import { Sensor } from '../../request/Sensor';
-import { SensorReading } from '../../request/SensorReading';
+import { SensorReadings } from '../../request/SensorReadings';
+import { defaultPrivacy, defaultPrivacyJson } from './PrivacyTest';
+import { AccelerometerReading } from '../../request/readings/AccelerometerReading';
 import { SENSORTYPE } from '../../GppGlobals';
 
 const expect = chai.expect;
 
-const requestId = 'requestid';
+const requestId = 'request_uuid';
 const defaultType = 'geopose';
 
 const sensorId = 'sensorid';
 
 let request: GeoPoseRequest;
-let now: string;
+let now: number;
 
 describe('GeoPoseRequest', () => {
     describe('constructor', () => {
@@ -32,7 +36,7 @@ describe('GeoPoseRequest', () => {
 
             expect(request.id).to.be.a('string').and.equal(requestId);
             expect(request.type).to.be.a('string').and.equal(defaultType);
-            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":"${request.timestamp}","type":"${defaultType}"}`);
+            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":${request.timestamp},"type":"${defaultType}","sensors":[],"sensorReadings":{}}`);
         });
 
         it('expect provided type', () => {
@@ -40,63 +44,65 @@ describe('GeoPoseRequest', () => {
             const request = new GeoPoseRequest(requestId, geoposeObjectType);
 
             expect(request.type).to.be.a('string').and.equal(geoposeObjectType);
-            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":"${request.timestamp}","type":"${geoposeObjectType}"}`);
+            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":${request.timestamp},"type":"${geoposeObjectType}","sensors":[],"sensorReadings":{}}`);
         });
     });
 
     describe('Accessors', () => {
+
         beforeEach(() => {
             request = new GeoPoseRequest(requestId);
-            now = new Date().toJSON();
+            now = new Date().getTime();
         });
 
         it('Timestamp', () => {
             request.timestamp = now;
 
-            expect(request.timestamp).to.be.a('string').and.equal(now);
-            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":"${now}","type":"${defaultType}"}`);
+            expect(request.timestamp).to.be.a('number').and.equal(now);
+            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":${now},"type":"${defaultType}","sensors":[],"sensorReadings":{}}`);
         });
 
-        it('SensorData', () => {
-            expect(request.sensorData[0]?.length).to.be.equal(0);
-            expect(request.sensorData[1]?.length).to.be.equal(0);
+        it('SensorReadings', () => {
+            expect(request.sensors.length).to.be.equal(0);
+            expect(request.sensorReadings.accelerometerReadings).to.be.undefined;
 
-            request.addSensorData(new Sensor(sensorId, SENSORTYPE.camera), new SensorReading(sensorId, ''));
+            request.addSensor(new Sensor(sensorId, SENSORTYPE.accelerometer))
+            request.addAccelerometerData(0,0,0, now, sensorId, defaultPrivacy);
 
-            const sensorData = request.sensorData;
-            expect(sensorData).to.be.a('Array').and.of.length(2);
-            expect(sensorData[0]?.[0]).to.be.an.instanceOf(Sensor);
-            expect(sensorData[1]?.[0]).to.be.an.instanceOf(SensorReading);
+            expect(request.sensorReadings).to.be.an.instanceOf(SensorReadings);
+            expect(request.sensors[0]).to.be.an.instanceOf(Sensor);
+            expect(request.sensorReadings.accelerometerReadings![0]).to.be.an.instanceOf(AccelerometerReading);
+            expect(request.sensorReadings.accelerometerReadings!.length).to.be.equal(1);
 
             request.clearSensorData();
-            expect(request.sensorData[0]?.length).to.be.equal(0);
-            expect(request.sensorData[1]?.length).to.be.equal(0);
+            expect(request.sensors.length).to.be.equal(0);
+            expect(request.sensorReadings.accelerometerReadings).to.be.undefined;
         });
 
-        it('SensorData unique id', () => {
-            request.addSensorData(new Sensor(sensorId, SENSORTYPE.camera), new SensorReading(sensorId, ''));
-
-            expect(() => request.addSensorData(new Sensor(sensorId, SENSORTYPE.camera), new SensorReading(sensorId, ''))).to.throw();
+        it('Sensor unique id', () => {
+            request.addSensor(new Sensor(sensorId, SENSORTYPE.accelerometer));
+            expect(() => request.addSensor(new Sensor(sensorId, SENSORTYPE.accelerometer))).to.throw();
         });
 
-        it('SensorData json', () => {
-            request.addSensorData(new Sensor(sensorId, SENSORTYPE.camera), new SensorReading(sensorId, now));
+        it('AccelerometerData json', () => {
+            request.addSensor(new Sensor(sensorId, SENSORTYPE.accelerometer))
+            request.addAccelerometerData(0, 0, 0, now, sensorId, defaultPrivacy);
 
-            const requestJson = `"id":"${requestId}","timestamp":"${request.timestamp}","type":"${defaultType}"`;
-            const sensorJson = `{"id":"sensorid","type":"camera"}`;
-            const readingJson = `{"sensorId":"sensorid","timestamp":"${now}","privacy":{"dataRetention":[],"dataAcceptableUse":[],"dataSanitizationApplied":[],"dataSanitizationRequested":[]}}`;
-            expect(JSON.stringify(request)).to.be.equal(`{${requestJson},"sensors":[${sensorJson}],"sensorReadings":[${readingJson}]}`);
+            const requestJson = `"id":"${requestId}","timestamp":${request.timestamp},"type":"${defaultType}"`;
+            const sensorsJson = `[{"id":"${sensorId}","type":"accelerometer"}]`;
+            const sensorReadingsJson = `{"accelerometerReadings":[{"x":0,"y":0,"z":0,"timestamp":${now},"sensorId":"${sensorId}","privacy":${defaultPrivacyJson}}]}`;
+            expect(JSON.stringify(request)).to.be.equal(`{${requestJson},"sensors":${sensorsJson},"sensorReadings":${sensorReadingsJson}}`);
 
             request.clearSensorData();
-            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":"${request.timestamp}","type":"${defaultType}"}`);
+            expect(JSON.stringify(request)).to.be.equal(`{"id":"${requestId}","timestamp":${request.timestamp},"type":"${defaultType}","sensors":[],"sensorReadings":{}}`);
         });
 
         it('PriorPoses', () => {
             expect(request.priorPoses).to.be.undefined;
 
-            request.addPriorPoses([new GeoPoseRequest(requestId)]);
+            request.addPriorPoses([new GeoPoseResponse("uuid", now, undefined, defaultType, new GeoPose())]);
             expect(request.priorPoses).to.be.an('Array').and.of.length(1);
-            expect(request.priorPoses?.[0]).to.be.instanceOf(GeoPoseRequest);
+            expect(request.priorPoses![0]).to.be.instanceOf(GeoPoseResponse);
 
             request.clearPriorPoses();
             expect(request.priorPoses).to.be.undefined;

@@ -111,5 +111,5 @@
   ],
   "include": [
     "./request/**/*"
-  ]
+, "response/GeoPose.ts"  ]
 }

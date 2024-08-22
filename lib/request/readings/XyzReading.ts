@@ -7,38 +7,57 @@
   SPDX-License-Identifier: MIT
 */
 
-export class XyzReading {
-    private reading;
-    constructor(x: number, y: number, z: number) {
-        this.reading = {
+import { Reading } from './Reading'
+import { Privacy } from '../Privacy'
+
+export class XyzReading extends Reading {
+    protected xyzReading: {
+        x: number;
+        y: number;
+        z: number;
+
+        // TODO: move to parent class and find a way to fixup toJSON
+        timestamp: number; // The number of milliseconds since the Unix Epoch.
+        sensorId: string;
+        privacy: Privacy;
+    };
+
+    constructor(x: number, y: number, z: number, timestamp: number, sensorId: string, privacy: Privacy) {
+        super(timestamp, sensorId, privacy)
+        this.xyzReading = {
             x: x,
             y: y,
             z: z,
+
+            // TODO: move to parent class and find a way to fixup toJSON
+            timestamp: timestamp, // The number of milliseconds since the Unix Epoch.
+            sensorId: sensorId,
+            privacy: privacy,
         };
     }
 
     get x() {
-        return this.reading.x;
+        return this.xyzReading.x;
     }
 
     set x(x) {
-        this.reading.x = x;
+        this.xyzReading.x = x;
     }
 
     get y() {
-        return this.reading.y;
+        return this.xyzReading.y;
     }
 
     set y(y) {
-        this.reading.y = y;
+        this.xyzReading.y = y;
     }
 
     get z() {
-        return this.reading.z;
+        return this.xyzReading.z;
     }
 
     set z(z) {
-        this.reading.x = z;
+        this.xyzReading.x = z;
     }
 
     /**
@@ -47,8 +66,19 @@ export class XyzReading {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key: keyof typeof this.reading | '' | 'reading') {
-        if (key !== '' && key !== 'reading') return this.reading[key];
-        else return this.reading;
+    toJSON(key: keyof typeof this.xyzReading | keyof typeof this.reading | '' | 'xyzReading' | number) {
+        //NOTE: numeric indices may come here as keys because this object is stored in an array
+        //const isNumericKey = (typeof key === "number") // this does not work for array indices
+        const isNumericKey = !isNaN(parseFloat(String(key))) && isFinite(Number(key));
+        if (isNumericKey)
+            return this.xyzReading;
+
+        if (key === '' || key === 'xyzReading')
+            return this.xyzReading;
+        if (this.xyzReading[key as keyof typeof this.xyzReading] != undefined)
+            return this.xyzReading[key as keyof typeof this.xyzReading];
+        if (this.reading[key as keyof typeof this.reading] != undefined)
+            return this.reading[key as keyof typeof this.reading];
+        throw TypeError("XyzReading object has no key " + key);
     }
 }

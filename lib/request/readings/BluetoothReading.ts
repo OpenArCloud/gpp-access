@@ -7,11 +7,15 @@
   SPDX-License-Identifier: MIT
 */
 
+import { Reading } from './Reading';
+import { Privacy } from '../Privacy'
+
 /**
  * Structure for a bluetooth sensor reading
  */
-export class BluetoothReading {
-    private reading;
+export class BluetoothReading extends Reading {
+    protected bluetoothReading;
+
     /**
      * Constructor, setting the required properties
      *
@@ -19,36 +23,42 @@ export class BluetoothReading {
      * @param rssi  Number  rssi from the sensor
      * @param name  String  name of the sensor
      */
-    constructor(address: string, rssi: number, name: string) {
-        this.reading = {
+    constructor(address: string, rssi: number, name: string, timestamp: number, sensorId: string, privacy: Privacy) {
+        super(timestamp, sensorId, privacy)
+        this.bluetoothReading = {
             address: address,
             RSSI: rssi,
             name: name,
+
+            // TODO: move to parent class and find a way to fixup toJSON
+            timestamp: timestamp, // The number of milliseconds since the Unix Epoch.
+            sensorId: sensorId,
+            privacy: privacy,
         };
     }
 
     get address() {
-        return this.reading.address;
+        return this.bluetoothReading.address;
     }
 
     set address(address) {
-        this.reading.address = address;
+        this.bluetoothReading.address = address;
     }
 
     get rssi() {
-        return this.reading.RSSI;
+        return this.bluetoothReading.RSSI;
     }
 
     set rssi(rssi) {
-        this.reading.RSSI = rssi;
+        this.bluetoothReading.RSSI = rssi;
     }
 
     get name() {
-        return this.reading.name;
+        return this.bluetoothReading.name;
     }
 
     set name(name) {
-        this.reading.name = name;
+        this.bluetoothReading.name = name;
     }
 
     /**
@@ -57,8 +67,19 @@ export class BluetoothReading {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key: keyof typeof this.reading | '' | 'reading') {
-        if (key !== '' && key !== 'reading') return this.reading[key];
-        else return this.reading;
+    toJSON(key: keyof typeof this.bluetoothReading | keyof typeof this.reading | '' | 'bluetoothReading' | number) {
+        //NOTE: numeric indices may come here as keys because this object is stored in an array
+        //const isNumericKey = (typeof key === "number") // TODO: this does not work for array indices
+        const isNumericKey = !isNaN(parseFloat(String(key))) && isFinite(Number(key));
+        if (isNumericKey)
+            return this.bluetoothReading;
+
+        if (key === '' || key === 'bluetoothReading')
+            return this.bluetoothReading;
+        if (this.bluetoothReading[key as keyof typeof this.bluetoothReading] != undefined)
+            return this.bluetoothReading[key as keyof typeof this.bluetoothReading];
+        if (this.reading[key as keyof typeof this.reading] != undefined)
+            return this.reading[key as keyof typeof this.reading];
+        throw TypeError("BluetoothReading object has no key " + key);
     }
 }

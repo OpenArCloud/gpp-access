@@ -34,6 +34,7 @@ export class CameraParam {
         minMaxDepth?: [number, number];
         minMaxDisparity?: [number, number];
     };
+
     constructor() {
         this.params = {
             model: CAMERAMODEL.UNKNOWN,
@@ -102,12 +103,13 @@ export class CameraParam {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key: keyof typeof this.params | 'params' | '') {
-        console.log(key);
-        if (key !== '' && key !== 'params') {
-            return this.params[key];
-        } else {
+    toJSON(key: keyof typeof this.params | '' | 'params') {
+        if (key === '' || key === 'params') {
             return this.params;
         }
+        if (this.params[key] != undefined) {
+            return this.params[key];
+        }
+        throw TypeError("CameraParam object has no key " + key)
     }
 }

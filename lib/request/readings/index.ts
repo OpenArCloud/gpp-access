@@ -10,5 +10,6 @@ export * from './CameraReading';
 export * from './GeoLocationReading';
 export * from './GyroscopeReading';
 export * from './MagnetometerReading';
+export * from './Reading';
 export * from './WifiReading';
 export * from './XyzReading';

@@ -8,28 +8,32 @@
 */
 
 export class ImageOrientation {
-    private orientation;
+    private imageOrientation: {
+        mirrored: boolean;
+        rotation: number;
+    };
+
     constructor(mirrored: boolean, rotation: number) {
-        this.orientation = {
+        this.imageOrientation = {
             mirrored: mirrored,
             rotation: rotation,
         };
     }
 
     get mirrored() {
-        return this.orientation.mirrored;
+        return this.imageOrientation.mirrored;
     }
 
     set mirrored(mirrored) {
-        this.orientation.mirrored = mirrored;
+        this.imageOrientation.mirrored = mirrored;
     }
 
     get rotation() {
-        return this.orientation.rotation;
+        return this.imageOrientation.rotation;
     }
 
     set rotation(rotation) {
-        this.orientation.rotation = rotation;
+        this.imageOrientation.rotation = rotation;
     }
 
     /**
@@ -38,8 +42,13 @@ export class ImageOrientation {
      * @param key  String|Number  Indicates which information the JSON-parser expect to be returned
      * @returns {*}  The content of the local object according to the provided key parameter
      */
-    toJSON(key: keyof typeof this.orientation | 'imageOrientation') {
-        if (key !== 'imageOrientation') return this.orientation[key];
-        else return this.orientation;
+    toJSON(key: keyof typeof this.imageOrientation | '' | 'imageOrientation') {
+        if (key === '' || key === 'imageOrientation') {
+            return this.imageOrientation;
+        }
+        if (this.imageOrientation[key] != undefined) {
+            return this.imageOrientation[key];
+        }
+        throw TypeError("ImageOrientation object has no key " + key)
     }
 }

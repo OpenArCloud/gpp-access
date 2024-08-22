@@ -9,11 +9,8 @@
 
 import deepMerge from 'deepmerge';
 
-/** Endpoints for GeoPose services returned from Spatial Service Discovery */
-export const defaultEndpoint = 'geopose';
-export const objectEndpoint = 'geopose_objs';
-
 export * from './request';
+export * from './response';
 export * from './GppGlobals';
 
 /** Base options for fetch to post json payload */
