@@ -111,7 +111,6 @@ export class SensorReadings {
      * @returns {*}  The content of the local object according to the provided key parameter
      */
     toJSON(key: keyof typeof this.sensorReadings | '' | 'sensorReadings') {
-        console.log("SensorReadings.toJSON  " + key)
         if (key === '' || key === 'sensorReadings')
             return this.sensorReadings;
         return this.sensorReadings[key];

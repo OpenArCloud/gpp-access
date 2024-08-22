@@ -118,27 +118,18 @@ export class CameraReading extends Reading {
      * @returns {*}  The content of the local object according to the provided key parameter
      */
     toJSON(key: keyof typeof this.cameraReading | keyof typeof this.reading | '' | 'cameraReading' | number) {
-        console.log("CameraReading.toJSON  " + key)
-
-        // TODO: remove
-        //const isNumericKey = !isNaN(key) && !isNaN(parseFloat(key));
-        //if (!isNumericKey && key) {
-        //    return this.cameraReading[key as keyof typeof this.cameraReading];
-        //} else {
-        //    return this.cameraReading;
-        //}
-        if (typeof key === "number") // TODO: this does not work for array indices
+        //NOTE: numeric indices may come here as keys because this object is stored in an array
+        //const isNumericKey = (typeof key === "number") // TODO: this does not work for array indices
+        const isNumericKey = !isNaN(parseFloat(String(key))) && isFinite(Number(key));
+        if (isNumericKey)
             return this.cameraReading;
 
         if (key === '' || key === 'cameraReading')
             return this.cameraReading;
-
         if (this.cameraReading[key as keyof typeof this.cameraReading] != undefined)
             return this.cameraReading[key as keyof typeof this.cameraReading];
         if (this.reading[key as keyof typeof this.reading] != undefined)
             return this.reading[key as keyof typeof this.reading];
-        //throw TypeError("CameraReading object has no key " + key);
-        console.log("CameraReading object has no key " + key); // TODO:fix that numeric indices come here as keys because this is object is stored in an array
-        return this.cameraReading
+        throw TypeError("CameraReading object has no key " + key);
     }
 }

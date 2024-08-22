@@ -29,6 +29,11 @@ export class BluetoothReading extends Reading {
             address: address,
             RSSI: rssi,
             name: name,
+
+            // TODO: move to parent class and find a way to fixup toJSON
+            timestamp: timestamp, // The number of milliseconds since the Unix Epoch.
+            sensorId: sensorId,
+            privacy: privacy,
         };
     }
 
@@ -63,8 +68,12 @@ export class BluetoothReading extends Reading {
      * @returns {*}  The content of the local object according to the provided key parameter
      */
     toJSON(key: keyof typeof this.bluetoothReading | keyof typeof this.reading | '' | 'bluetoothReading' | number) {
-        if (typeof key === "number")
+        //NOTE: numeric indices may come here as keys because this object is stored in an array
+        //const isNumericKey = (typeof key === "number") // TODO: this does not work for array indices
+        const isNumericKey = !isNaN(parseFloat(String(key))) && isFinite(Number(key));
+        if (isNumericKey)
             return this.bluetoothReading;
+
         if (key === '' || key === 'bluetoothReading')
             return this.bluetoothReading;
         if (this.bluetoothReading[key as keyof typeof this.bluetoothReading] != undefined)

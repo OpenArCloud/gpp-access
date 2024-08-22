@@ -11,6 +11,7 @@ import chai from 'chai';
 import 'mocha';
 
 import { GeoLocationReading } from '../../../request/readings/GeoLocationReading';
+import { defaultPrivacy, defaultPrivacyJson } from '../PrivacyTest';
 
 const expect = chai.expect;
 
@@ -21,16 +22,18 @@ const accuracy = 0;
 const altAccuracy = 0;
 const heading = 0;
 const speed = 0;
+const timestamp = new Date().getTime();
+const sensorId = "myGeolocationSensor";
 
-const defaultJson = `"latitude":${lat},"longitude":${lon},"altitude":${alt},"accuracy":${accuracy},"altitudeAccuracy":${altAccuracy},"heading":${heading},"speed":${speed}}`;
+const defaultJson = `"latitude":${lat},"longitude":${lon},"altitude":${alt},"accuracy":${accuracy},"altitudeAccuracy":${altAccuracy},"heading":${heading},"speed":${speed},"timestamp":${timestamp},"sensorId":"${sensorId}","privacy":${defaultPrivacyJson}`;
 
 let reading;
 
 describe('GeoLocationReadingTest', () => {
     describe('constructor', () => {
         it('expect provided parameters', () => {
-            reading = new GeoLocationReading(lat, lon, alt, accuracy, altAccuracy, heading, speed);
-            expect(JSON.stringify(reading)).to.be.equal(`{${defaultJson}`);
+            reading = new GeoLocationReading(lat, lon, alt, accuracy, altAccuracy, heading, speed, timestamp, sensorId, defaultPrivacy);
+            expect(JSON.stringify(reading)).to.be.equal(`{${defaultJson}}`);
         });
     });
 });

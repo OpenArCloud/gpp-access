@@ -104,7 +104,6 @@ export class CameraParam {
      * @returns {*}  The content of the local object according to the provided key parameter
      */
     toJSON(key: keyof typeof this.params | '' | 'params') {
-        console.log(key);
         if (key === '' || key === 'params') {
             return this.params;
         }

@@ -56,7 +56,6 @@ export class GeoPoseRequest {
             sensorReadings: new SensorReadings(),
         };
         this.idGen = this.idGenerator();
-        console.log("##########  GPP v2 ##########") // TODO: remove
     }
 
     get id() {
@@ -83,16 +82,15 @@ export class GeoPoseRequest {
         this.internal.type = type;
     }
 
-    /**
-     * Request the Sensors and SensorReadings registered in the GeoPoseRequest
-     *
-     * @returns {Sensor[], SensorReadings}
-     */
-    get sensorData() {
-        if (this.internal.sensors === undefined)
-            return [[], new SensorReadings()];
-        return [this.internal.sensors, this.internal.sensorReadings];
+    get sensors() {
+        return this.internal.sensors;
     }
+    // no set sensors!
+
+    get sensorReadings() {
+        return this.internal.sensorReadings;
+    }
+    // no set sensorReadings!
 
     public generateNewSensorId() {
         return this.idGen.next().value;

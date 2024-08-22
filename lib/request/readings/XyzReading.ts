@@ -67,8 +67,12 @@ export class XyzReading extends Reading {
      * @returns {*}  The content of the local object according to the provided key parameter
      */
     toJSON(key: keyof typeof this.xyzReading | keyof typeof this.reading | '' | 'xyzReading' | number) {
-        if (typeof key === "number")
+        //NOTE: numeric indices may come here as keys because this object is stored in an array
+        //const isNumericKey = (typeof key === "number") // this does not work for array indices
+        const isNumericKey = !isNaN(parseFloat(String(key))) && isFinite(Number(key));
+        if (isNumericKey)
             return this.xyzReading;
+
         if (key === '' || key === 'xyzReading')
             return this.xyzReading;
         if (this.xyzReading[key as keyof typeof this.xyzReading] != undefined)

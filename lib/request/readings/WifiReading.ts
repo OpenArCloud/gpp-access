@@ -111,8 +111,12 @@ export class WifiReading extends Reading {
      * @returns {*}  The content of the local object according to the provided key parameter
      */
     toJSON(key: keyof typeof this.wifiReading | keyof typeof this.reading | '' | 'wifiReading' | number) {
-        if (typeof key === "number")
+        //NOTE: numeric indices may come here as keys because this object is stored in an array
+        //const isNumericKey = (typeof key === "number") // TODO: this does not work for array indices
+        const isNumericKey = !isNaN(parseFloat(String(key))) && isFinite(Number(key));
+        if (isNumericKey)
             return this.wifiReading;
+
         if (key === '' || key === 'wifiReading')
             return this.wifiReading;
         if (this.wifiReading[key as keyof typeof this.wifiReading] != undefined)
