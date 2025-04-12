@@ -18,6 +18,7 @@ const JSONPOST = {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
+        'Accept': 'application/vnd.oscp+json;version=2.0;',
     },
 };
 

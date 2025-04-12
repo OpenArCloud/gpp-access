@@ -127,8 +127,6 @@ export class GeoPoseRequest {
             throw new Error('A sensor with ID ' + sensor.id + ' was already added. Sensor IDs must to be unique in a request');
 
         this.internal.sensors.push(sensor);
-        //console.log("Added sensor: ")
-        //console.log(JSON.stringify(sensor))
         return this;
     }
 
